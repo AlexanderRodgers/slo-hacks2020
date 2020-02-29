@@ -35,6 +35,17 @@ const MedForm = () => {
             variant="outlined"
          />
          </CardContent>
+         <CardContent>
+            <TextField
+               disabled
+               label="DOB"
+               multiline
+               rowsMax="10"
+               id="outlined-size-normal"
+               defaultValue="Jan. 27, 1995"
+               variant="outlined"
+            />
+         </CardContent>
       </Card>
    );
 };

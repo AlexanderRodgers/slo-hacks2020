@@ -1,5 +1,9 @@
 import React from "react";
-import ReactDOM from 'react-dom';
+import history from './services/history';
+import Main from './components/Main';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
 
@@ -10,120 +14,19 @@ class App extends React.Component {
 
     render() {
 
+      // components were seperated into their own files under the 'components' folder. They then get imported here. 
+
         return (
-            <div className="root-container">
-
-                <div className="box-controller">
-                    <div className="controller">
-                        Login
-                    </div>
-                    <div className="controller">
-                        Register
-                    </div>
-                </div>
-            
-            
-
-                <div className="box-container">
-
-                    
-
-                
-                </div>
-            </div>
+          <Router history={history}>
+            <Switch>
+              {/* When the route in the search bar changes, the components that are visible change with it.  */}
+              <Route path exact="/" component = {Main}></Route>
+              <Route path="/login" component={Login}></Route>
+              <Route path="/login" component={SignUp}></Route>
+            </Switch>
+          </Router>
         );
     }
 }
 
-
-
-
-class LoginBox extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {   };
-    }
-
-    submitLogin(e){
-        
-    }
-
-    render() {
-        return(
-            <div className="inner-container">
-                <div className='header'>
-                  Login  
-                </div>
-
-                <div className="box">
-
-                    <div className="input-group">
-                        <label htmlFor="username">Username</label>
-                        <input type="text" name="username" className="login-input" placeholder="Username"/>
-                    </div>
-
-                    <div className="input-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" name="password" className="login-input" placeholder="Password"/>
-                    </div>
-
-                    <button type="button" className="login-btn" onClick={this.submitLogin.bind(this)}>Login</button>
-
-
-                </div>
-
-            </div>    
-        );
-        
-    }      
-        
-
-
-}
-
-class Register extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {   };
-    }
-
-    submitRegister(e){
-        
-    }
-
-    render() {
-        return(
-            <div className="inner-container">
-                <div className='header'>
-                  Register  
-                </div>
-
-                <div className="box">
-
-                    <div className="input-group">
-                        <label htmlFor="username">Username</label>
-                        <input type="text" name="username" className="login-input" placeholder="Username"/>
-                    </div>
-
-                    <div className="input-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" name="password" className="login-input" placeholder="Password"/>
-                    </div>
-
-                    <button type="button" className="login-btn" onClick={this.submitRegister.bind(this)}>Register</button>
-
-
-                </div>
-
-            </div>    
-        );
-        
-    }      
-        
-
-
-}
-
-ReactDOM.render(<App />, document.getElementById("root"));
+export default App;
