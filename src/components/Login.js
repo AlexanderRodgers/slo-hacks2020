@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -10,6 +11,8 @@ const Login = () => {
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [user, loading, error] = useAuthState(auth);
+
+   const history = useHistory();
 
    const handleChange = (stateProp, e) => {
       switch(stateProp) {
@@ -27,6 +30,8 @@ const Login = () => {
    const login = () => {
       auth.signInWithEmailAndPassword(username, password).then(res => {
          console.log(res);
+         localStorage.setItem('config', res.user.email);
+         history.push('/home');
       });
     };
 

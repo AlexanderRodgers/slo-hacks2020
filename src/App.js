@@ -6,18 +6,14 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Home from './components/Home';
 import MedForm from './components/MedForm';
-import { auth } from './base/base';
 import { Router, Route, Switch, History } from 'react-router-dom';
 
 const App = () => {
 
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState(localStorage.getItem('config'));
   useEffect(() => {
-      auth.onAuthStateChanged(setCurrentUser);
+    setCurrentUser(localStorage.getItem('config'));
   }, []);
-
-  console.log(currentUser);
-
     // components were seperated into their own files under the 'components' folder. They then get imported here. 
 
       return (
