@@ -4,6 +4,7 @@ import Layout from './components/Layout';
 import Main from './components/Main';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
+import Home from './components/Home';
 import MedForm from './components/MedForm';
 import { Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from "./components/PrivateRoute";
@@ -27,6 +28,7 @@ class App extends React.Component {
                 <Route path="/" exact component={Main}></Route>
                 <Route path="/login" component={Login}></Route>
                 <Route path="/signup" component={SignUp}></Route>
+                <Route path="/home" component={Home}></Route>
                 <Route path="/medical" component={MedForm}></Route>
               </Switch>
             </Layout>
