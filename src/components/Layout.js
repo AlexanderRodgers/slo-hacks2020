@@ -17,9 +17,9 @@ const Layout = (props) => {
    document.body.style.background = "linear-gradient(to right, #667db6, #0082c8, #0082c8, #667db6)";
    return (
       <div>
-         {props.children}
          <Particles 
-                params={particleOpts} />
+                params={particleOpts} style={{position:'absolute', zIndex:'-100'}}/>
+         {props.children}
       </div>
    );
 };
