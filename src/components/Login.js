@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import { auth } from '../base/base';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital'; 
 
 const Login = () =>  {
 
@@ -39,9 +40,12 @@ const Login = () =>  {
       return(
          <Card style={{width:"45%", height:"100%", textAlign:"center", margin:"auto", marginTop:"15%"}}>
          <CardContent >                
-         <div className="inner-container">
+         <div className="inner-container">              
+             
             
-            <h1 style={{/*padding: "1px 1px"*/}}>Medichain</h1>
+            <LocalHospitalIcon style={{ fontSize: 60 }}/>
+            
+            <h1 style={{ fontFamily: "MontSerratBold"}}>MediLink</h1>
             
          </div>
             
