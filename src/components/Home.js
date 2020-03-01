@@ -7,6 +7,9 @@ import { firestore } from '../base/base';
 import blockchainClient from '../base/blockchainClient';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useCollection } from 'react-firebase-hooks/firestore';
+
+let userABI = require('../assets/userBlockInterface.json');
 
 const useStyles = makeStyles({
     root: {
@@ -28,18 +31,41 @@ const useStyles = makeStyles({
 const Home = () => {
     const classes = useStyles();
 
+    const [userValue, loading, error] = useCollection(
+        firestore.collection('Users').doc(localStorage.getItem('config'))
+     );
     const [doctor, setDoctor] = useState(null);
 
     async function addDoctorToBlock() {
-        console.log('click');
         const [first, last] = doctor.split(' ');
         firestore.collection("Users").where('firstName', "==", first).where('lastName', '==', last).where('userType', "==", 'doctor')
             .get()
             .then(function(query) {
-                query.forEach(function(doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", doc.data());
-                });
+                while (!userValue);
+
+                if (query.docs.length) {
+                    const value = query.docs[0];
+
+                    const doctorId = query.docs[0].id;
+
+                    firestore.collection("Users").doc(doctorId).set({
+                        Contracts: [userValue.data().Contracts[0]]
+                    });
+                    console.log("Updated contract list");
+
+                    const contract = new blockchainClient.eth.Contract(userABI, userValue.data().Contracts[0]);
+                    let newPermissions = [value.data().account];
+
+                    contract.methods.setPermissionedUsers(newPermissions).call({from: userValue.data().address})
+                       .then((result) => {
+                          console.log('Update permissions success!');
+                       })
+                       .catch(err => {
+                          console.log(err);
+                       })
+                } else {
+                    console.log("No query found");
+                }
             })
             .catch(function(error) {
                 console.log("Error getting documents: ", error);
@@ -54,7 +80,10 @@ const Home = () => {
 
             <Link to='/medical'>
                 <Button variant="contained" color="primary">
-                    View your medical records
+                    {userValue.data().userType === "Doctor"
+                        ? "View medical records you have access to"
+                        : "View your medical records"
+                    }
                 </Button>
             </Link>
 
@@ -66,7 +95,7 @@ const Home = () => {
                         <TextField id="outlined-basic" 
                                    label="Doctor" 
                                    variant="outlined"
-                                   onChange={(event) => {setDoctor(event.target.value); console.log(doctor);}} />)
+                                   onChange={(event) => setDoctor(event.target.value)} />)
                     : (
                         <TextField
                             error

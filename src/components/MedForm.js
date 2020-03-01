@@ -11,14 +11,13 @@ import blockchainClient from '../base/blockchainClient';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles } from '@material-ui/core/styles';
 
+let userABI = require('../assets/userBlockInterface.json');
+
 const useStyles = makeStyles({
    root: {
      margins:"10px",width:"100%",height:"670px"
    },
  });
-
-
-let userABI = require('../assets/userBlockInterface.json');
 
 const styles = {
    text: {
@@ -43,14 +42,7 @@ const MedForm = () => {
          return;
       }
 
-      blockchainClient.eth.getAccounts().then(function(result) {
-         console.log(result)
-      });
-
       const contract = new blockchainClient.eth.Contract(userABI, value.data().Contracts[0]);
-      
-      console.log(value.data().Contracts[0]);
-      console.log(value.data().address);
 
       contract.methods.getPatient().call({from: value.data().address})
          .then((result) => {
