@@ -47,7 +47,19 @@ const MedForm = () => {
             disabled
             label="Marital Status"
             id="patient-marital-status"
-            defaultValue="Male"
+            defaultValue="Married"
+            variant="outlined"
+         />
+         </CardContent>
+         <CardContent>
+         <TextField
+            style={{width:"100%"}}
+            disabled
+            multiline
+            rowsMax="10"
+            label="Who has access to this content"
+            id="patient-marital-status"
+            defaultValue="Hello"
             variant="outlined"
          />
          </CardContent>
