@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, CardContent } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import { Card } from '@material-ui/core';
+
 const Home = () => {
     return (
         <Card style={{width:"60%",textAlign:"center",margin:"auto"}}>
@@ -17,7 +18,7 @@ const Home = () => {
             <div style={{display:"flex",alignContent:"center",paddingTop:"10%",margin:"center"}}> 
                 {true
                     ? (
-                        <TextField id="outlined-basic" label="Doctor" variant="outlined" />)
+                        <TextField id="outlined-basic" label="Doctor" variant="outlined" style={{width:"100%", margin:'0 10px 0 0'}}/>)
                     : (
                         <TextField
                             error
@@ -29,8 +30,6 @@ const Home = () => {
                     )
 
                 }
-
-
 
                 <Button variant="contained" style={{margin:"auto"}} color="primary">
                 Add doctor
