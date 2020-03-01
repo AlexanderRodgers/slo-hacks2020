@@ -7,7 +7,6 @@ import SignUp from './components/SignUp';
 import Home from './components/Home';
 import MedForm from './components/MedForm';
 import { Router, Route, Switch } from 'react-router-dom';
-import PrivateRoute from "./components/PrivateRoute";
 
 class App extends React.Component {
 
@@ -26,9 +25,9 @@ class App extends React.Component {
               <Switch>
                 {/* When the route in the search bar changes, the components that are visible change with it.  */}
                 <Route path="/" exact component={Main}></Route>
+                <Route path="/home" component={Home}></Route>
                 <Route path="/login" component={Login}></Route>
                 <Route path="/signup" component={SignUp}></Route>
-                <Route path="/home" component={Home}></Route>
                 <Route path="/medical" component={MedForm}></Route>
               </Switch>
             </Layout>

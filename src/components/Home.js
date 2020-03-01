@@ -4,7 +4,7 @@ import { TextField } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 const Home = () => {
     return (
-        <Card style={{width:"60%",height:"100%",textAlign:"center",margin:"auto",marginTop:"50%"}}>
+        <Card style={{width:"60%",textAlign:"center",margin:"auto"}}>
         <CardContent>
             <h1 style={{padding:"1px 1px"}}> Home Page </h1>
             <div style={{display:"block"}}>
