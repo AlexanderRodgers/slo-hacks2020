@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -7,13 +7,33 @@ import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '../base/base';
+import blockchainClient from '../base/blockchainClient';
 
+let userABI = require('../assets/userBlockInterface.json');
 
 const MedForm = () => {
-
    const [value, loading, error] = useCollection(
       firestore.collection('Users')
-      );
+   );
+
+   const [userBlock, setUserBlock] = useState(null);
+
+   useEffect(() => {
+      if (!value) {
+         return;
+      }
+
+      const contract = new blockchainClient.eth.Contract(userABI, "0x8f0c5d8953FD7fA5c6Cf9c67D210fD2e5B943eF7");
+
+      contract.methods.getAge().call({from: "0x55e7e72467BFA687e32eAa224F15c2a30Acb7dB7"})
+         .then((result) => {
+            console.log(result);
+         })
+         .catch(err => {
+            console.log(err);
+         })
+
+   }, [userBlock, value]);
 
    return (
       <div>
