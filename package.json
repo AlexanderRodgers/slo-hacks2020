@@ -44,5 +44,10 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts"
+    ]
   }
 }

@@ -8,11 +8,12 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import HomeIcon from '@material-ui/icons/Home';
 import Icon from '@material-ui/core/Icon';
-// import fonts from './assets/fonts'
+import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 
-// export const Fonts = {
-//    MontSerrat: 'Montserrat-Regular'
-// }
+
+export const Fonts = {
+   MontSerrat: 'Montserrat-Regular'
+}
 
 
 
@@ -31,9 +32,12 @@ class Login extends React.Component {
        return(
           <Card style={{width:"45%", height:"100%", textAlign:"center", margin:"auto", marginTop:"15%"}}>
             <CardContent >                
-            <div className="inner-container">
+            <div className="inner-container">              
+                
                
-               <h1 style={{/*padding: "1px 1px"*/}}>Medichain</h1>
+               <LocalHospitalIcon style={{ fontSize: 60 }}/>
+               
+               <h1 style={{ fontFamily: Fonts.MontSerratBold}}>Medichain</h1>
                
 
              
