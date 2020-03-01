@@ -21,7 +21,7 @@
 			},
 			{
 				"internalType": "string",
-				"name": "_height",
+				"name": "_weight",
 				"type": "string"
 			},
 			{
@@ -41,7 +41,7 @@
 			},
 			{
 				"internalType": "string",
-				"name": "_race",
+				"name": "_ethnicity",
 				"type": "string"
 			},
 			{
@@ -127,7 +127,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getGender",
+		"name": "getEthnicity",
 		"outputs": [
 			{
 				"internalType": "string",
@@ -140,7 +140,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getHeight",
+		"name": "getGender",
 		"outputs": [
 			{
 				"internalType": "string",
@@ -192,6 +192,81 @@
 	},
 	{
 		"inputs": [],
+		"name": "getPatient",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address[]",
+						"name": "permissionedUsers",
+						"type": "address[]"
+					},
+					{
+						"internalType": "uint256",
+						"name": "age",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "weight",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "gender",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "dob",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "maritalStatus",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "ethnicity",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "primaryLanguage",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "insuranceNum",
+						"type": "string"
+					},
+					{
+						"internalType": "string[]",
+						"name": "allergies",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "currentPrescriptions",
+						"type": "string[]"
+					},
+					{
+						"internalType": "string[]",
+						"name": "immunizationRecord",
+						"type": "string[]"
+					}
+				],
+				"internalType": "struct Records.patientStruct",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "getPermissionedUsers",
 		"outputs": [
 			{
@@ -218,7 +293,7 @@
 	},
 	{
 		"inputs": [],
-		"name": "getRace",
+		"name": "getWeight",
 		"outputs": [
 			{
 				"internalType": "string",

@@ -24,159 +24,164 @@ const styles = {
 
 const MedForm = () => {
    const [value, loading, error] = useCollection(
-      firestore.collection('Users')
+      firestore.collection('Users').doc("tranjason")
    );
 
    const [userBlock, setUserBlock] = useState(null);
 
    useEffect(() => {
+      console.log('effeft');
       if (!value) {
          return;
       }
 
-      const contract = new blockchainClient.eth.Contract(userABI, "0x8f0c5d8953FD7fA5c6Cf9c67D210fD2e5B943eF7");
+      const contract = new blockchainClient.eth.Contract(userABI, "0x8751864f915a1A07ec60314be2B8b836CA2798C6");
 
-      contract.methods.getAge().call({from: "0x55e7e72467BFA687e32eAa224F15c2a30Acb7dB7"})
+      contract.methods.getPatient().call({from: "0x55e7e72467BFA687e32eAa224F15c2a30Acb7dB7"})
          .then((result) => {
-            console.log(result);
+            setUserBlock(result);
          })
          .catch(err => {
             console.log(err);
          })
 
-   }, [userBlock, value]);
+   }, [value]);
 
    return (
       <div>
          {error && <strong>Error: {JSON.stringify(error)}</strong>}
          {loading && <span>Collection: Loading...</span>}
-         {/* {value && (
-            value.docs.forEach((doc) => {
-               console.log(doc.data());
-            })
-        )} */}
-        {value && 
-         <Card style={{margin: "10px"}}>
-            <CardContent>
-               <Typography>Medical History</Typography>
-            </CardContent>
-            <CardContent style={styles.content}>
-               <TextField
-               style={styles.text}
-               disabled
-               label="Age"
-               id="patient-age"
-               defaultValue="24"
-               variant="outlined"
-               />
-               <TextField
-                  style={styles.text}
-                  disabled
-                  label="Weight"
-                  id="patient-weight"
-                  defaultValue="160 lbs"
-                  variant="outlined"
-               />
-               <TextField
-                  style={styles.text}
-                  disabled
-                  label="DOB"
-                  id="patient-dob"
-                  defaultValue="Jan. 27, 1995"
-                  variant="outlined"
-               />
-            </CardContent>
-            <CardContent style={styles.content}>
-            <TextField
-               style={styles.text}
-               disabled
-               label="Gender"
-               id="patient-gender"
-               defaultValue="Male"
-               variant="outlined"
-            />
-            <TextField
-               style={styles.text}
-               disabled
-               label="Marital Status"
-               id="patient-marital-status"
-               defaultValue="Married"
-               variant="outlined"
-            />
-            <TextField
-               style={styles.text}
-               disabled
-               label="Height"
-               id="patient-height"
-               defaultValue="5 ft. 9 in."
-               variant="outlined"
-            />
-            </CardContent>
-            <CardContent style={styles.content}>
-            <TextField
-               style={styles.text}
-               disabled
-               label="Language"
-               id="patient-language"
-               defaultValue="English"
-               variant="outlined"
-            />
-            <TextField
-               style={styles.text}
-               disabled
-               label="Language"
-               id="patient-language"
-               defaultValue="English"
-               variant="outlined"
-            />
-            <TextField
-               style={styles.text}
-               disabled
-               label="Insurance No."
-               id="patient-insurance"
-               defaultValue="93460138"
-               variant="outlined"
-            />
-            </CardContent>
-            <CardContent style={styles.content}>
-            <TextField
-               style={{width:"100%"}}
-               disabled
-               multiline
-               rowsMax="10"
-               label="Who has access to this content"
-               id="patient-marital-status"
-               defaultValue="John Taylor - Mercy Medical"
-               variant="outlined"
-            />
-            </CardContent>
-            <CardContent style={styles.content}>
-               <TextField
-                  style={{width:"100%"}}
-                  disabled
-                  multiline
-                  rowsMax="10"
-                  label="Allergies"
-                  id="patient-allergies"
-                  defaultValue="Peanuts, Walnuts, Almonds"
-                  variant="outlined"
-               />
-            </CardContent>
-            <CardContent style={styles.content}>
-               <TextField
-                  style={{width:"100%"}}
-                  disabled
-                  multiline
-                  rowsMax="10"
-                  label="Current Prescriptions"
-                  id="patient-prescriptions"
-                  defaultValue="Tylenol - 200mg twice a day until headaches subside"
-                  variant="outlined"
-               />
-            </CardContent>
-         </Card>
-         }
-      </div>
+         {userBlock 
+            ? (
+               <Card style={{margin: "10px"}}>
+                  <CardContent>
+                     <Typography>Medical History</Typography>
+                  </CardContent>
+                  <CardContent style={styles.content}>
+                     <TextField
+                     style={styles.text}
+                     disabled
+                     label="Age"
+                     id="patient-age"
+                     defaultValue={userBlock.age}
+                     variant="outlined"
+                     />
+                     <TextField
+                        style={styles.text}
+                        disabled
+                        label="Weight"
+                        id="patient-weight"
+                        defaultValue={userBlock.weight + 'lbs'}
+                        variant="outlined"
+                     />
+                     <TextField
+                        style={styles.text}
+                        disabled
+                        label="DOB"
+                        id="patient-dob"
+                        defaultValue={userBlock.dob}
+                        variant="outlined"
+                     />
+                  </CardContent>
+                  <CardContent style={styles.content}>
+                  <TextField
+                     style={styles.text}
+                     disabled
+                     label="Gender"
+                     id="patient-gender"
+                     defaultValue={userBlock.gender}
+                     variant="outlined"
+                  />
+                  <TextField
+                     style={styles.text}
+                     disabled
+                     label="Marital Status"
+                     id="patient-marital-status"
+                     defaultValue={userBlock.maritalStatus}
+                     variant="outlined"
+                  />
+                  </CardContent>
+                  <CardContent style={styles.content}>
+                  <TextField
+                     style={styles.text}
+                     disabled
+                     label="Primary Language"
+                     id="patient-language"
+                     defaultValue={userBlock.primaryLanguage}
+                     variant="outlined"
+                  />
+                  <TextField
+                     style={styles.text}
+                     disabled
+                     label="Insurance No."
+                     id="patient-insurance"
+                     defaultValue={userBlock.insuranceNum}
+                     variant="outlined"
+                  />
+                  </CardContent>
+                  <CardContent style={styles.content}>
+                  <TextField
+                     style={{width:"100%"}}
+                     disabled
+                     multiline
+                     rowsMax="10"
+                     label="Other entities with access to this content"
+                     id="patient-permissions"
+                     defaultValue={userBlock.permissionedUsers.length 
+                        ? userBlock.permissionedUsers 
+                        : "None"}
+                     variant="outlined"
+                  />
+                  </CardContent>
+                  <CardContent style={styles.content}>
+                     <TextField
+                        style={{width:"100%"}}
+                        disabled
+                        multiline
+                        rowsMax="10"
+                        label="Allergies"
+                        id="patient-allergies"
+                        defaultValue={userBlock.allergies.length 
+                           ? userBlock.allergies
+                           : "None"}
+                        variant="outlined"
+                     />
+                  </CardContent>
+                  <CardContent style={styles.content}>
+                     <TextField
+                        style={{width:"100%"}}
+                        disabled
+                        multiline
+                        rowsMax="10"
+                        label="Current Prescriptions"
+                        id="patient-prescriptions"
+                        defaultValue={userBlock.currentPrescriptions.length  
+                           ? userBlock.currentPrescriptions
+                           : "None"}
+                        variant="outlined"
+                     />
+                  </CardContent>
+                  <CardContent style={styles.content}>
+                     <TextField
+                        style={{width:"100%"}}
+                        disabled
+                        multiline
+                        rowsMax="10"
+                        label="Immunization Records"
+                        id="patient-immunization"
+                        defaultValue={userBlock.immunizationRecord.length  
+                           ? userBlock.immunizationRecord
+                           : "None"}
+                        variant="outlined"
+                     />
+                  </CardContent>
+               </Card>
+            )
+            : (
+               <div>No records</div>
+            )
+            }
+         </div>
    );
 };
 
