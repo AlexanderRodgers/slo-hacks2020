@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { Button, CardContent } from '@material-ui/core';
 import { TextField } from '@material-ui/core';
 import { Card } from '@material-ui/core';
-<<<<<<< HEAD
-=======
+import { firestore } from '../base/base';
+import blockchainClient from '../base/blockchainClient';
 import { Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useCollection } from 'react-firebase-hooks/firestore';
+import { auth } from '../base/base';
 
-
+let userABI = require('../assets/userBlockInterface.json');
 
 const useStyles = makeStyles({
     root: {
@@ -25,54 +28,105 @@ const useStyles = makeStyles({
       marginBottom: 12,
     },
   });
-
-
-  
->>>>>>> 6791145a90ab0ae4ded78eeb5c3fe768e1478d17
-
 const Home = () => {
     const classes = useStyles();
+    const history = useHistory();
+    const [userValue, loading, error] = useCollection(
+        firestore.collection('Users').doc(localStorage.getItem('config'))
+     );
+    const [doctor, setDoctor] = useState(null);
+
+    const logout = () => {
+        auth.signOut().then(res => {
+            console.log(res);
+            localStorage.setItem('config', '');
+            history.push('/login');
+        });
+    }
+
+    async function addDoctorToBlock() {
+        const [first, last] = doctor.split(' ');
+        firestore.collection("Users").where('firstName', "==", first).where('lastName', '==', last).where('userType', "==", 'doctor')
+            .get()
+            .then(function(query) {
+                while (!userValue);
+
+                if (query.docs.length) {
+                    const value = query.docs[0];
+
+                    const doctorId = query.docs[0].id;
+
+                    firestore.collection("Users").doc(doctorId).set({
+                        Contracts: [userValue.data().Contracts[0]]
+                    });
+                    console.log("Updated contract list");
+
+                    const contract = new blockchainClient.eth.Contract(userABI, userValue.data().Contracts[0]);
+                    let newPermissions = [value.data().account];
+
+                    contract.methods.setPermissionedUsers(newPermissions).call({from: userValue.data().address})
+                       .then((result) => {
+                          console.log('Update permissions success!');
+                       })
+                       .catch(err => {
+                          console.log(err);
+                       })
+                } else {
+                    console.log("No query found");
+                }
+            })
+            .catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+    }
+
     return (
         <Card style={{width:"80%",textAlign:"center",margin:"auto",height:"600px",marginTop:"10%"}}>
         <CardContent>
             <h1 style={{padding:"0px 0px"}}> Home Page </h1>
             <div style={{display:"block"}}>
-            <Button variant="contained" color="primary" style={{height:"75px",width:"450px",fontSize:"23px",marginTop:"3%"}}>
-            View your medical records
-            </Button>
+
+            <Link to='/medical'>
+                <Button variant="contained" color="primary">
+                    {userValue && userValue.data().userType === "Doctor"
+                        ? "View medical records you have access to"
+                        : "View your medical records"
+                    }
+                </Button>
+            </Link>
+
             </div>
             
-
-            <div style={{display:"flex",alignContent:"center",paddingTop:"10%",margin:"center",justifyContent:"center"}}> 
+            <div style={{display:"flex",alignContent:"center",paddingTop:"10%",margin:"center"}}> 
                 {true
                     ? (
-                        <TextField id="outlined-basic" label="Doctor" variant="outlined" style={{width:"100%", margin:'0 10px 0 0'}}/>)
+                        <TextField id="outlined-basic" 
+                                   label="Doctor" 
+                                   variant="outlined"
+                                   onChange={(event) => setDoctor(event.target.value)} />)
                     : (
                         <TextField
                             error
                             id="standard-error-helper-text"
-                            label="Error"
-                            defaultValue=""
+                            label="Doctor"
                             helperText="Incorrect entry."
+                            onChange={(event) => { 
+                                setDoctor(event.target.value); 
+                                console.log(doctor); }}
                         />
                     )
-
                 }
-
-<<<<<<< HEAD
-                <Button variant="contained" style={{margin:"auto"}} color="primary">
-=======
-
-
-                <Button variant="contained"color="primary" style={{paddingleft:"px"}}>
->>>>>>> 6791145a90ab0ae4ded78eeb5c3fe768e1478d17
-                Add doctor
+                <Button variant="contained" 
+                        style={{margin:"auto"}} 
+                        color="primary"
+                        onClick={() => addDoctorToBlock()}>
+                    Add doctor
                 </Button>
-            </div>
+                </div>
 
             <div style={{paddingTop:"10%"}}>
-                <Button variant="contained" style={{margin:"auto"}} color="secondary">
-                Logout
+                <Button variant="contained" style={{margin:"auto"}} color="secondary" onClick={() => logout()}>
+                    Logout
                 </Button>
             </div>
 
@@ -80,16 +134,10 @@ const Home = () => {
             Created by Alexander Rodgers, Andy Do, Jason Tran, and Justin Truong
             </Typography>
             
-
-
-
-            
-            
-            
         </CardContent>
         </Card>
         
-    )
+    );
 }
 
 export default Home;

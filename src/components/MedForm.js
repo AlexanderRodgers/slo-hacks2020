@@ -9,14 +9,13 @@ import blockchainClient from '../base/blockchainClient';
 import Skeleton from '@material-ui/lab/Skeleton';
 import { makeStyles } from '@material-ui/core/styles';
 
+let userABI = require('../assets/userBlockInterface.json');
+
 const useStyles = makeStyles({
    root: {
      margins:"10px",width:"100%",height:"670px"
    },
  });
-
-
-let userABI = require('../assets/userBlockInterface.json');
 
 const styles = {
    text: {
@@ -31,20 +30,19 @@ const styles = {
 
 const MedForm = () => {
    const [value, loading, error] = useCollection(
-      firestore.collection('Users').doc("tranjason")
+      firestore.collection('Users').doc(localStorage.getItem('config'))
    );
 
    const [userBlock, setUserBlock] = useState(null);
 
    useEffect(() => {
-      console.log('effeft');
       if (!value) {
          return;
       }
 
-      const contract = new blockchainClient.eth.Contract(userABI, "0x8751864f915a1A07ec60314be2B8b836CA2798C6");
+      const contract = new blockchainClient.eth.Contract(userABI, value.data().Contracts[0]);
 
-      contract.methods.getPatient().call({from: "0x55e7e72467BFA687e32eAa224F15c2a30Acb7dB7"})
+      contract.methods.getPatient().call({from: value.data().address})
          .then((result) => {
             setUserBlock(result);
          })
