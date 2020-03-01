@@ -6,6 +6,7 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import MedForm from './components/MedForm';
 import { Router, Route, Switch } from 'react-router-dom';
+import PrivateRoute from "./components/PrivateRoute";
 
 class App extends React.Component {
 
