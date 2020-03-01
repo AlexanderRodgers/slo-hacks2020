@@ -40,9 +40,14 @@ const MedForm = () => {
          return;
       }
 
+      if (!value.data().Contracts[0]) {
+         return;
+      }
+
       const contract = new blockchainClient.eth.Contract(userABI, value.data().Contracts[0]);
 
-      contract.methods.getPatient().call({from: value.data().address})
+      // contract.methods.getPatient().call({from: value.data().address})
+      contract.methods.getPatient().call({from: '0x55e7e72467BFA687e32eAa224F15c2a30Acb7dB7'})
          .then((result) => {
             setUserBlock(result);
          })
@@ -183,13 +188,21 @@ const MedForm = () => {
                </Card>
             )
             : (
-               <span></span>
-            
+               <div >
+                  <Card style={{margin: "10px"}}>
+                     <CardContent>
+                        <Typography>Medical History</Typography>
+                     </CardContent>
+                     <CardContent>
+                        <Typography>No records!</Typography>
+                     </CardContent>
+                  </Card>
+               </div>
             )
             }
             {error && <strong>Error: {JSON.stringify(error)}</strong>}
-            {loading && <Card style={{margin:"10px",height:"65%"}}> 
-            {<Skeleton variant="rect" style={{margin:"10px",width:"100%"}} height={660} /> }</Card> } 
+            {/* {loading && <Card style={{margin:"10px",height:"65%"}}> 
+            {<Skeleton variant="rect" style={{margin:"10px",width:"100%"}} height={660} /> }</Card> }  */}
             </div>
    );
 };

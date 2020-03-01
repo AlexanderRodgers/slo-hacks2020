@@ -57,6 +57,7 @@ const Home = () => {
                     const doctorId = query.docs[0].id;
 
                     firestore.collection("Users").doc(doctorId).set({
+                        ...value.data(),
                         Contracts: [userValue.data().Contracts[0]]
                     });
                     console.log("Updated contract list");
@@ -83,12 +84,16 @@ const Home = () => {
     return (
         <Card style={{width:"80%",textAlign:"center",margin:"auto",height:"600px",marginTop:"10%"}}>
         <CardContent>
-            <h1 style={{padding:"0px 0px"}}> Home Page </h1>
+            <h1 style={{padding:"0px 0px"}}> Hi
+                    {userValue 
+                        ? ', ' + userValue.data().firstName + ' ' +  userValue.data().lastName
+                        : ''
+                    } </h1>
             <div style={{display:"block"}}>
 
             <Link to='/medical'>
                 <Button variant="contained" color="primary">
-                    {userValue && userValue.data().userType === "Doctor"
+                    {userValue && userValue.data().userType === "doctor"
                         ? "View medical records you have access to"
                         : "View your medical records"
                     }
