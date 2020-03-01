@@ -1,4 +1,6 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 class LoginBox extends React.Component {
 
@@ -13,7 +15,9 @@ class LoginBox extends React.Component {
 
    render() {
        return(
+      
            <div className="inner-container">
+                <TextField id="outlined-basic" label="Outlined" variant="outlined" />
                <div className='header'>
                  Login  
                </div>
