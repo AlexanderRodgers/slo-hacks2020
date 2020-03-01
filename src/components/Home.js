@@ -86,7 +86,11 @@ const Home = () => {
         <CardContent>
             <h1 style={{padding:"0px 0px"}}> Hi
                     {userValue 
-                        ? ', ' + userValue.data().firstName + ' ' +  userValue.data().lastName
+                        ? ', ' + 
+                            (userValue.data().userType === 'doctor'
+                                ? 'Doctor'
+                                : userValue.data().firstName) +
+                            ' ' +  userValue.data().lastName
                         : ''
                     } </h1>
             <div style={{display:"block"}}>
@@ -102,32 +106,33 @@ const Home = () => {
 
             </div>
             
-            <div style={{display:"flex",alignContent:"center",paddingTop:"10%",margin:"center"}}> 
-                {true
-                    ? (
-                        <TextField id="outlined-basic" 
-                                   label="Doctor" 
-                                   variant="outlined"
-                                   onChange={(event) => setDoctor(event.target.value)} />)
-                    : (
-                        <TextField
-                            error
-                            id="standard-error-helper-text"
-                            label="Doctor"
-                            helperText="Incorrect entry."
-                            onChange={(event) => { 
-                                setDoctor(event.target.value); 
-                                console.log(doctor); }}
-                        />
-                    )
-                }
-                <Button variant="contained" 
-                        style={{margin:"auto"}} 
-                        color="primary"
-                        onClick={() => addDoctorToBlock()}>
-                    Add doctor
-                </Button>
+            {userValue && userValue.data().userType === "patient" &&
+                <div style={{display:"flex",alignContent:"center",paddingTop:"10%",margin:"center",justifyContent: 'center'}}> 
+                    {true
+                        ? (
+                            <TextField id="outlined-basic" 
+                                    label="Doctor" 
+                                    variant="outlined"
+                                    onChange={(event) => setDoctor(event.target.value)} />)
+                        : (
+                            <TextField
+                                error
+                                id="standard-error-helper-text"
+                                label="Doctor"
+                                helperText="Incorrect entry."
+                                onChange={(event) => { 
+                                    setDoctor(event.target.value); 
+                                    console.log(doctor); }}
+                            />
+                        )
+                    }
+                    <Button variant="contained"  
+                            color="primary"
+                            onClick={() => addDoctorToBlock()}>
+                        Add doctor
+                    </Button>
                 </div>
+            }
 
             <div style={{paddingTop:"10%"}}>
                 <Button variant="contained" style={{margin:"auto"}} color="secondary" onClick={() => logout()}>
