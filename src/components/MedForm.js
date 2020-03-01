@@ -8,6 +8,15 @@ import { Typography } from '@material-ui/core';
 import { useCollection } from 'react-firebase-hooks/firestore';
 import { firestore } from '../base/base';
 import blockchainClient from '../base/blockchainClient';
+import Skeleton from '@material-ui/lab/Skeleton';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles({
+   root: {
+     margins:"10px",width:"100%",height:"670px"
+   },
+ });
+
 
 let userABI = require('../assets/userBlockInterface.json');
 
@@ -46,11 +55,11 @@ const MedForm = () => {
          })
 
    }, [value]);
+   const classes = useStyles();
+
 
    return (
       <div>
-         {error && <strong>Error: {JSON.stringify(error)}</strong>}
-         {loading && <span>Collection: Loading...</span>}
          {userBlock 
             ? (
                <Card style={{margin: "10px"}}>
@@ -178,10 +187,14 @@ const MedForm = () => {
                </Card>
             )
             : (
-               <div>No records</div>
+               <span></span>
+            
             )
             }
-         </div>
+            {error && <strong>Error: {JSON.stringify(error)}</strong>}
+            {loading && <Card style={{margin:"10px",height:"65%"}}> 
+            {<Skeleton variant="rect" style={{margin:"10px",width:"100%"}} height={660} /> }</Card> } 
+            </div>
    );
 };
 
