@@ -16,35 +16,40 @@ const MedForm = () => {
             <TextField
             disabled
             label="Age"
-            id="outlined-size-normal"
+            id="patient-age"
             defaultValue="24"
             variant="outlined"
          />
          <TextField
             disabled
             label="Weight"
-            id="outlined-size-normal"
+            id="patient-weight"
             defaultValue="160 lbs"
             variant="outlined"
          />
          <TextField
             disabled
             label="DOB"
-            id="outlined-size-normal"
+            id="patient-dob"
             defaultValue="Jan. 27, 1995"
             variant="outlined"
          />
          </CardContent>
          <CardContent>
-            <TextField
-               disabled
-               label="DOB"
-               multiline
-               rowsMax="10"
-               id="outlined-size-normal"
-               defaultValue="Jan. 27, 1995"
-               variant="outlined"
-            />
+         <TextField
+            disabled
+            label="Gender"
+            id="patient-gender"
+            defaultValue="Male"
+            variant="outlined"
+         />
+         <TextField
+            disabled
+            label="Marital Status"
+            id="patient-marital-status"
+            defaultValue="Male"
+            variant="outlined"
+         />
          </CardContent>
       </Card>
    );
