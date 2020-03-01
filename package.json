@@ -12,9 +12,11 @@
     "firebase": "^7.9.3",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
+    "react-firebase-hooks": "^2.1.1",
     "react-particles-js": "^2.7.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
+    "web3": "^1.2.6",
     "web3-js": "^1.0.5-beta.26"
   },
   "scripts": {
