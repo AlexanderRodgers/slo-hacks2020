@@ -45,7 +45,7 @@ const Login = () =>  {
             
             <LocalHospitalIcon style={{ fontSize: 60 }}/>
             
-            <h1 style={{ fontFamily: "MontSerratBold"}}>Medichain</h1>
+            <h1 style={{ fontFamily: "MontSerratBold"}}>MediLink</h1>
             
          </div>
             
