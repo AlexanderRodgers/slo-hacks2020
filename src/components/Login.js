@@ -7,7 +7,8 @@ import Button from '@material-ui/core/Button';
 import { auth } from '../base/base';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const Login = () => {
+const Login = () =>  {
+
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [user, loading, error] = useAuthState(auth);
@@ -35,40 +36,37 @@ const Login = () => {
       });
     };
 
-      return (
+      return(
          <Card style={{width:"45%", height:"100%", textAlign:"center", margin:"auto", marginTop:"15%"}}>
-         <CardContent >
-            <form>               
+         <CardContent >                
          <div className="inner-container">
             
-            <h1 style={{/*padding: "1px 1px"*/}}>Login</h1>
+            <h1 style={{/*padding: "1px 1px"*/}}>Medichain</h1>
+            
+         </div>
+            
             <div className="Login Box">
-               <TextField id="outlined-basic" label="Email" variant="outlined" onChange={(e) => handleChange('username', e)} value={username} />  
+               <TextField id="outlined-basic" label="Username" variant="outlined" onChange={(e) => handleChange('username', e)} value={username}/>  
                <h1 style={{/*padding: "1px 1px*/}}> </h1>
                </div>                       
 
+
             <div className="box">
-            <TextField id="outlined-basic" type="password" label="Password" variant="outlined" onChange={(e) => handleChange('password', e)} value={password}/> 
+            <TextField id="outlined-basic" label="Password" type="password" variant="outlined" onChange={(e) => handleChange('password', e)} value={password} /> 
             <h1 style={{/*padding: "0.5px 0.5px"*/}}> </h1> 
             
             </div>
 
             <div className="forgotpasswordbuttons">
             <Button variant="contained" color="secondary">Forgot Password?</Button>
+            <h1 style={{/*padding: "0.5px 0.5px"*/}}> </h1>    
             </div>
             <div className="loginbutton">
-            <Button variant="contained" color="primary" onClick={() => login()}>Login</Button>
+            <Button  variant="contained" color="primary" style={{width:"190px" }} onClick={() => login()}>Login</Button>
             </div>
                
-            </div>
-            </form>           
-
             </CardContent> 
-         </Card>  
-      
+         </Card>         
       );
-       
-   } 
-
-
-export default Login
+}
+export default Login;

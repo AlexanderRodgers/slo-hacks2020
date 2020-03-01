@@ -24,7 +24,8 @@ const App = () => {
               {!currentUser && history.push('/login')}
               <Route path="/login" component={Login}></Route>
               <Route path="/" exact component={Main}></Route>
-              {currentUser && <Route path="/home" component={Home}></Route>}
+              {currentUser && history.push('/home')}
+              <Route path="/home" component={Home}></Route>
               <Route path="/signup" component={SignUp}></Route>
               <Route path="/medical" component={MedForm}></Route>
             </Switch>
